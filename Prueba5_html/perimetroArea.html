@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Figuras Geométricas</title>
+</head>
+<body>
+    <h1>Calculadora de Figuras Geométricas</h1>
+
+    <label for="figura">Seleccione la figura:</label>
+    <select id="figura">
+        <option value="cuadrado">Cuadrado</option>
+        <option value="triangulo">Triángulo</option>
+        <option value="circulo">Círculo</option>
+    </select>
+
+    <div id="input-cuadrado" style="display: none;">
+        <label for="lado-cuadrado">Ingrese el lado del cuadrado:</label>
+        <input type="number" id="lado-cuadrado">
+    </div>
+
+    <div id="input-triangulo" style="display: none;">
+        <label for="base-triangulo">Ingrese la base del triángulo:</label>
+        <input type="number" id="base-triangulo">
+
+        <label for="altura-triangulo">Ingrese la altura del triángulo:</label>
+        <input type="number" id="altura-triangulo">
+    </div>
+
+    <div id="input-circulo" style="display: none;">
+        <label for="radio-circulo">Ingrese el radio del círculo:</label>
+        <input type="number" id="radio-circulo">
+    </div>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="resultado" style="display: none;">
+        <h2>Resultado:</h2>
+        <p id="area"></p>
+        <p id="perimetro"></p>
+    </div>
+
+    <script>
+        function mostrarInputs() {
+            const figura = document.getElementById("figura").value;
+
+            document.getElementById("input-cuadrado").style.display = figura === "cuadrado" ? "block" : "none";
+            document.getElementById("input-triangulo").style.display = figura === "triangulo" ? "block" : "none";
+            document.getElementById("input-circulo").style.display = figura === "circulo" ? "block" : "none";
+
+            document.getElementById("resultado").style.display = "none";
+        }
+
+        function calcular() {
+            const figura = document.getElementById("figura").value;
+
+            if (figura === "cuadrado") {
+                const lado = parseFloat(document.getElementById("lado-cuadrado").value);
+                const area = lado * lado;
+                const perimetro = 4 * lado;
+
+                mostrarResultado(area, perimetro);
+            } else if (figura === "triangulo") {
+                const base = parseFloat(document.getElementById("base-triangulo").value);
+                const altura = parseFloat(document.getElementById("altura-triangulo").value);
+                const area = (base * altura) / 2;
+
+                mostrarResultado(area, "No se puede calcular el perímetro de un triángulo con solo base y altura.");
+            } else if (figura === "circulo") {
+                const radio = parseFloat(document.getElementById("radio-circulo").value);
+                const pi = 3.1416;
+                const area = pi * radio * radio;
+                const perimetro = 2 * pi * radio;
+
+                mostrarResultado(area, perimetro);
+            }
+        }
+
+        function mostrarResultado(area, perimetro) {
+            document.getElementById("area").textContent = "Área: " + area;
+            document.getElementById("perimetro").textContent = "Perímetro: " + perimetro;
+            document.getElementById("resultado").style.display = "block";
+        }
+
+        document.getElementById("figura").addEventListener("change", mostrarInputs);
+    </script>
+</body>
+</html>
